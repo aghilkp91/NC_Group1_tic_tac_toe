@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from game_ai import Game_AI
 
@@ -10,7 +11,7 @@ class Game():
     PLAYER1 = 'PLAYER 1'
     PLAYER2 = 'PLAYER 2'
 
-    def __init__(self, board_width, board_height, should_use_ai, ai_genes, background=(0, 0, 0), line_color=(0, 255, 0), line_thickness=3, shape_thickness=2):
+    def __init__(self, board_width, board_height, should_use_ai, ai_genes, background=(245,245,245), line_color=(125, 125, 125), line_thickness=10, shape_thickness=10, player_x_color=(255, 163, 63),player_o_color=(169, 207, 84)):
         """
         Initialize game state
         """
@@ -18,6 +19,8 @@ class Game():
         self._BOARD_HEIGHT = int(board_height)
         self._BACKGROUND = tuple([int(color) for color in background])
         self._LINE_COLOR = tuple([int(color) for color in line_color])
+        self.player_x_color = tuple(int(color) for color in player_x_color)
+        self.player_o_color = tuple(int(color) for color in player_o_color)
         self._LINE_THICKNESS = int(line_thickness)
         self._SHAPE_THICKNESS = int(shape_thickness)
 
@@ -96,19 +99,20 @@ class Game():
             y_1 = self._clicked_position[0] * self._BOARD_HEIGHT / 3.0 + ((1 / 4.0) * (self._BOARD_HEIGHT / 3.0))
             x_2 = self._clicked_position[1] * self._BOARD_WIDTH / 3.0 + ((3 / 4.0) * (self._BOARD_WIDTH / 3.0))
             y_2 = self._clicked_position[0] * self._BOARD_HEIGHT / 3.0 + ((3 / 4.0) * (self._BOARD_HEIGHT / 3.0))
-            pygame.draw.lines(screen, self._LINE_COLOR, False, ((x_1, y_1), (x_2, y_2)), self._SHAPE_THICKNESS)
-            pygame.draw.lines(screen, self._LINE_COLOR, False, ((x_2, y_1), (x_1, y_2)), self._SHAPE_THICKNESS)
+            pygame.draw.lines(screen, self.player_x_color, False, ((x_1, y_1), (x_2, y_2)), self._SHAPE_THICKNESS+2)
+            pygame.draw.lines(screen, self.player_x_color, False, ((x_2, y_1), (x_1, y_2)), self._SHAPE_THICKNESS+3)
         elif self._PLAYER_SHAPES[self._current_player] == Game.SHAPE_O:
             x = self._clicked_position[1] * self._BOARD_WIDTH / 3.0 + ((1 / 2.0) * (self._BOARD_WIDTH / 3.0))
             y = self._clicked_position[0] * self._BOARD_HEIGHT / 3.0 + ((1 / 2.0) * (self._BOARD_HEIGHT / 3.0))
-            pygame.draw.circle(screen, self._LINE_COLOR, (int(x), int(y)), int((3 / 8.0) * (self._BOARD_HEIGHT / 3.0)), self._SHAPE_THICKNESS)
+            pygame.draw.circle(screen, self.player_o_color, (int(x), int(y)), int((3 / 8.0) * (self._BOARD_HEIGHT / 3.0)), self._SHAPE_THICKNESS)
 
-    def _show_winner(self, screen, font='Arial', font_size=32, font_color=(0, 0, 255)):
+    def _show_winner(self, screen, font='Arial', font_size=50, font_color=(0, 0, 255)):
         """
         Displays the winner of the game
         """
-        message = self._winning_player + ' WINS!' if self._winning_player is not None else 'TIE!'
-        message_x = self._BOARD_WIDTH / 2.0 - ((len(message) / 90.0) * self._BOARD_WIDTH)
+        font_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0,255));
+        message = self._winning_player + ' WINS!!!' if self._winning_player is not None else 'IT\'S A TIE!'
+        message_x = self._BOARD_WIDTH / 2.0 - ((len(message) / 78.0) * self._BOARD_WIDTH)
         message_y = self._BOARD_HEIGHT / 2.0 - ((1 / 20.0) * self._BOARD_HEIGHT)
         screen.blit(pygame.font.SysFont(font, font_size).render(message, False, font_color, self._BACKGROUND), (message_x, message_y))
 
