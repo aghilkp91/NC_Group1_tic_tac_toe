@@ -2,6 +2,7 @@ import pygame
 import random
 
 from game_ai import Game_AI
+from minimax import Game_Minimax
 
 
 class Game():
@@ -11,7 +12,7 @@ class Game():
     PLAYER1 = 'PLAYER 1'
     PLAYER2 = 'PLAYER 2'
 
-    def __init__(self, board_width, board_height, should_use_ai, ai_genes, background=(245,245,245), line_color=(125, 125, 125), line_thickness=10, shape_thickness=10, player_x_color=(255, 163, 63),player_o_color=(169, 207, 84)):
+    def __init__(self, board_width, board_height, should_use_ai, ai_genes, should_use_minimax, background=(245,245,245), line_color=(220, 220, 220), line_thickness=8, shape_thickness=10, player_o_color=(255, 69, 0),player_x_color=(41, 41, 41)):
         """
         Initialize game state
         """
@@ -36,6 +37,8 @@ class Game():
             defensive_gene = float(ai_genes[1])
             random_gene = float(ai_genes[2])
             self._game_ai = Game_AI(aggressive_gene, defensive_gene, random_gene)
+        elif bool(should_use_minimax):
+            self._game_ai = Game_Minimax()
         else:
             self._game_ai = None
 
