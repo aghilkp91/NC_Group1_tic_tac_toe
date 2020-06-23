@@ -54,10 +54,11 @@ def run(should_use_ai, should_use_minimax):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Tic Toe Game vs Evolution AI vs Minimax')
-    parser.add_argument('-e', '--use-ai', dest='use_ai', action='store_true', help='Enable the evolutionary algorithm and instead play a 2-person game')
+    parser = argparse.ArgumentParser(description='Tic Toe Game Evolution AI and Minimax')
+    parser.add_argument('-r', '--use-randomforest', dest='use_random_forest', action='store_true', help='Enable the random forest as computer')
+    parser.add_argument('-e', '--use-ai', dest='use_ai', action='store_true', help='Enable the evolutionary algorithm as computer player')
     parser.add_argument('-m', '--use-minimax', dest='use_minimax', action='store_true',
-                        help='Enable the minimax and instead play a 2-person game')
+                        help='Enable the minimax as the computer player')
     args = parser.parse_args()
 
     try:
