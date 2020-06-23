@@ -8,4 +8,4 @@ of both algorithm.
 ### Usage:
 * Run ` make install ` to install the python dependencies
 * Next run ` make train ` in order to train "optimal" genes which the game ai can use to play against you (The genes are stored in "./data/best_genes.json")
-* Play against the trained ai by running ` make run `
+* Play between evolutionary and minimax run ` python3 scripts/run-game.py -m -e -n 149 `
